@@ -1,0 +1,32 @@
+{
+    "name": "request-base",
+    "description": "HTTP request base client",
+    "tags": [
+        "http",
+        "simple",
+        "util",
+        "utility",
+        "base"
+    ],
+    "version": "0.0.1",
+    "author": "Eric Chuang <ddsakura@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "engines": [
+        "node >= 0.10.0"
+    ],
+    "main": "index.js",
+    "dependencies": {
+        "request": "~2.31.0"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "jslint": "*"
+    },
+    "scripts": {
+        "lint": "jslint index.js",
+        "test": "mocha test/test.js"
+    }
+}

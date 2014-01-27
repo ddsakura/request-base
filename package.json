@@ -27,6 +27,6 @@
     },
     "scripts": {
         "lint": "jslint index.js",
-        "test": "mocha test/test.js"
+        "test": "mocha tests/test.js"
     }
 }

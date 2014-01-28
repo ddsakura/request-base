@@ -8,7 +8,7 @@
         "utility",
         "base"
     ],
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Eric Chuang <ddsakura@gmail.com>",
     "repository": {
         "type": "git",
@@ -23,10 +23,11 @@
     },
     "devDependencies": {
         "mocha": "*",
-        "jslint": "*"
+        "jslint": "*",
+        "istanbul": "*"
     },
     "scripts": {
         "lint": "jslint index.js",
-        "test": "mocha tests/test.js"
+        "test": "istanbul cover _mocha tests/test.js"
     }
 }

@@ -9,17 +9,20 @@ var requestBatches = {},
             callbacks,
             i;
         args = args || {};
-        args.uri = args.uri || 'http://mikeal.iriscouch.com/testjs/111';
+        if (!args.uri) {
+            callback(new Error("no uri in args."));
+            return;
+        }
         args.method = args.method || 'GET';
 
         // Cache the result if no error and flush batch
-        function onSuccess(err, msg) {
+        function onRequest(err, msg) {
             if (!err) {
                 requestCache[args.uri] = msg;
             }
             delete requestBatches[args.uri];
             for (i = 0; i < callbacks.length; i += 1) {
-                if (callback) {
+                if (typeof callbacks[i] === 'function') {
                     callbacks[i](err, msg);
                 }
             }
@@ -48,9 +51,16 @@ var requestBatches = {},
             uri: args.uri
         }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
-                onSuccess(null, body);
-            } else {
-                console.log('error: ' + response.statusCode);
+                onRequest(null, body);
+                return;
+            }
+            if (!error && response.statusCode !== 200) {
+                onRequest(new Error(response.statusCode));
+                return;
+            }
+            if (error) {
+                onRequest(error);
+                return;
             }
         });
     };

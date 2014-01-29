@@ -14,6 +14,7 @@ var requestBatches = {},
             return;
         }
         args.method = args.method || 'GET';
+        args.headers = args.headers || {};
 
         // Cache the result if no error and flush batch
         function onRequest(err, msg) {
@@ -48,7 +49,8 @@ var requestBatches = {},
 
         request({
             method: args.method,
-            uri: args.uri
+            uri: args.uri,
+            headers: args.headers
         }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 onRequest(null, body);

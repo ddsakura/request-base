@@ -4,33 +4,12 @@
 "use strict";
 
 var rb = require('../index'),
-    server = require('./server'),
     assert = require('assert'),
-    s = server.createServer(8080);
+    nock = require('nock');
 
-s.listen(s.port, function () {
-    s.on('/getJson123', function (req, resp) {
-        resp.writeHead(200, {'content-type': 'application/json'});
-        resp.write(JSON.stringify({
-            key: '123'
-        }));
-        resp.end();
-    });
-
-    s.on('/getJson321', function (req, resp) {
-        resp.writeHead(200, {'content-type': 'application/json'});
-        resp.write(JSON.stringify({
-            key: '321'
-        }));
-        resp.end();
-    });
-
-    s.on('/getStatus500', function (req, resp) {
-        resp.writeHead(500);
-        resp.write('500');
-        resp.end();
-    });
-});
+nock('http://localhost:8080').get('/getJson123').reply(200, '{"key":"123"}');
+nock('http://localhost:8080').get('/getJson321').reply(200, '{"key":"321"}');
+nock('http://localhost:8080').get('/getStatus500').reply(500);
 
 describe('io test', function () {
     it('should return json 123', function (done) {
